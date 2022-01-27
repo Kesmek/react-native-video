@@ -950,10 +950,10 @@ class ReactExoplayerView extends FrameLayout implements
         if (!(error instanceof ExoPlaybackException)) {
             return;
         }
-        ExoPlaybackException e = (ExoPlaybackException)error;
-        String errorString = "ExoPlaybackException type : " + e.type;
-        if (e.type == ExoPlaybackException.TYPE_RENDERER) {
-            Exception cause = e.getRendererException();
+        ExoPlaybackException eExo = (ExoPlaybackException)error;
+        String errorString = "ExoPlaybackException type : " + eExo.type;
+        if (eExo.type == ExoPlaybackException.TYPE_RENDERER) {
+            Exception cause = eExo.getRendererException();
             if (cause instanceof MediaCodecRenderer.DecoderInitializationException) {
                 // Special case for decoder initialization failures.
                 MediaCodecRenderer.DecoderInitializationException decoderInitializationException =
@@ -974,12 +974,12 @@ class ReactExoplayerView extends FrameLayout implements
                 }
             }
         }
-        else if (e.type == ExoPlaybackException.TYPE_SOURCE) {
+        else if (eExo.type == ExoPlaybackException.TYPE_SOURCE) {
             errorString = getResources().getString(R.string.unrecognized_media_format);
         }
-        eventEmitter.error(errorString, e);
+        eventEmitter.error(errorString, eExo);
         playerNeedsSource = true;
-        if (isBehindLiveWindow(e)) {
+        if (isBehindLiveWindow(eExo)) {
             clearResumePosition();
             initializePlayer();
         } else {
