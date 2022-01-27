@@ -946,7 +946,7 @@ class ReactExoplayerView extends FrameLayout implements
     }
 
     @Override
-    public void onPlayerError(ExoPlaybackException e) {
+    public void onPlayerError(PlaybackException error) {
         if (!(error instanceof ExoPlaybackException)) {
             return;
         }
